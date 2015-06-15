@@ -1,0 +1,43 @@
+#!/bin/bash
+
+
+BASE_DIR=$(dirname "$0")
+
+OPTIONS=""
+ARGS=""
+
+while [ "$#" != 0 ] ; do
+    case "$1" in
+        --color)
+            OPTIONS="$OPTIONS --color $2"
+            shift 2
+            ;;
+        --filename)
+            OPTIONS="$OPTIONS --filename $2"
+            shift 2
+            ;;
+        --scale)
+            OPTIONS="$OPTIONS --scale $2"
+            shift 2
+            ;;
+        --size)
+            OPTIONS="$OPTIONS --size $2"
+            shift 2
+            ;;
+        *)
+            ARGS="$ARGS $1"
+            shift
+            ;;
+    esac
+done
+
+mkdir -p "$BASE_DIR"/dist
+cd "$BASE_DIR"/dist
+
+../icon_font_to_png.py \
+    $OPTIONS \
+    ../lib/fontawesome-webfont.ttf \
+    ../lib/font-awesome.css \
+    $ARGS
+
+
